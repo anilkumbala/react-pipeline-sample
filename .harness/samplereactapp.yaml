@@ -1,7 +1,7 @@
 pipeline:
   name: sample-react-app
   identifier: samplereactapp
-  projectIdentifier: DhrubaCI
+  projectIdentifier: ContinuousIntegration
   orgIdentifier: default
   tags: {}
   stages:
@@ -26,7 +26,7 @@ pipeline:
                   identifier: build_and_push_to_docker
                   spec:
                     connectorRef: <+input>
-                    repo: <+input>
+                    repo: sample-react-app
                     tags:
                       - latest
                     dockerfile: Dockerfile
@@ -40,6 +40,6 @@ pipeline:
     ci:
       codebase:
         connectorRef: <+input>
-        repoName: sample-react-app-ci
+        repoName: react-pipeline-sample
         build: <+input>
 
