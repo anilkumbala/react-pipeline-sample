@@ -10,6 +10,7 @@ pipeline:
         connectorRef: anilgithub
         repoName: react-pipeline-sample
         build: <+input>
+        sparseCheckout: []
   stages:
     - stage:
         name: Build
@@ -28,8 +29,25 @@ pipeline:
             steps:
               - step:
                   type: Run
-                  name: Run_1
+                  name: install node modules
                   identifier: Run_1
                   spec:
                     shell: Sh
-                    command: echo "hi"
+                    command: npm install
+              - step:
+                  type: Run
+                  name: build app
+                  identifier: build_app
+                  spec:
+                    shell: Sh
+                    command: npm run build
+              - step:
+                  type: BuildAndPushDockerRegistry
+                  name: BuildAndPushDockerRegistry_1
+                  identifier: BuildAndPushDockerRegistry_1
+                  spec:
+                    connectorRef: <+input>
+                    repo: <+input>
+                    tags:
+                      - latest
+                    dockerfile: Dockerfile
